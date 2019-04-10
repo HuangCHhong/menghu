@@ -37,7 +37,7 @@ class WeChat extends Model
         }
     }
 
-    public static function getUserInfo($rawData,$signature){
+    public static function setUserInfo($rawData,$signature){
         // 获取存储的session_key
         $session_key = Common::getSession('session_key');
         if(empty($session_key)){
@@ -52,13 +52,13 @@ class WeChat extends Model
 
         // 进行数据存储
         $data = array(
-            'name'=>$rawData['nickName'],
-            'openid'=>$rawData['openId'],
+            'nickName'=>$rawData['nickName'],
+            'openid'=>$rawData['roleId'],
             'city'=>$rawData['city'],
             'avatarUrl'=>$rawData['avatarUrl'],
         );
-        if(User::in($data)){
-            return $data;
+        if(User::upd($rawData["id"],$data)){
+            return true;
         }else{
             Access::Respond(0,array(),'数据格式错误，存储数据失败');
         }

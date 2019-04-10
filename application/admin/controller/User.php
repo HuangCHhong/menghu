@@ -40,14 +40,16 @@ class User extends Controller
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
-        $mustParam = array("id","openId","nickName","roleId","avatarUrl","city");
+        $mustParam = array("rawData","signature");
         Access::MustParamDetectOfRawData($mustParam,$data);
+        $mustParam = array("id","nickName","roleId","city","avatarUrl");
+        Access::MustParamDetectOfRawData($mustParam,$data["rawData"]);
 
-        $ok = UserModel::upd($data["id"],$data);
+        $ok = WeChat::setUserInfo($data["rawData"],$data["signature"]);
         if(!$ok){
             Access::Respond(0,array(),"设置用户基本信息失败");
         }
-        Access::Respond(1,UserModel::read($data["openId"]),"设置基本信息成功");
+        Access::Respond(1,UserModel::getByUserId($data["rawData"]["id"]),"设置基本信息成功");
     }
 
     // 编辑用户数据

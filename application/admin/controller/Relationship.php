@@ -22,15 +22,19 @@ class Relationship extends Controller
         $flag = null;
         Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $attUserId = Access::MustParamDetect("userId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("userId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
+
 
         // 检测是否已经关注
-        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($attUserId)));
+        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($param["userId"])));
         if(count($data) > 0){
             Access::Respond(0,array(),"已关注");
         }
-        $ok = relationshipModel::in(array("userId"=>$userId,"attUserId"=>$attUserId));
+        $ok = relationshipModel::in(array("userId"=>$userId,"attUserId"=>$param["userId"]));
         if(!$ok){
             Access::Respond(0,array(),"关注失败");
         }
@@ -44,11 +48,14 @@ class Relationship extends Controller
         $flag = null;
         Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $attUserId = Access::MustParamDetect("userId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("userId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
 
         // 检测是否已经关注
-        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($attUserId)));
+        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($param["userId"])));
         if(count($data) <= 0){
             Access::Respond(0,array(),"未关注");
         }

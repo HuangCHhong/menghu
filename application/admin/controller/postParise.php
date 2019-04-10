@@ -33,18 +33,21 @@ class postParise extends Controller
         $flag = null;
         Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $postId = Access::MustParamDetect("postId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("postId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
 
         // 判断是否已经点过赞
-        $data = postPariseModel::read(array("userId"=>$userId,"postId"=>$postId));
+        $data = postPariseModel::read(array("userId"=>$userId,"postId"=>$param["postId"]));
         if(count($data) > 0){
             Access::Respond(0,array(),"已经点过赞");
         }
 
         // 保存DB
-        postPariseModel::in(array("userId"=>$userId,"postId"=>$postId));
-        postModel::addParise($postId);
+        postPariseModel::in(array("userId"=>$userId,"postId"=>$param["postId"]));
+        postModel::addParise($param["postId"]);
         Access::Respond(1,array(),"点赞成功");
     }
 
@@ -55,17 +58,20 @@ class postParise extends Controller
         $flag = null;
         Authority::getInstance()->permitAll(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $postId = Access::MustParamDetect("postId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("postId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
 
         // 判断是否已经点过赞
-        $data = postPariseModel::read(array("userId"=>$userId,"postId"=>$postId));
+        $data = postPariseModel::read(array("userId"=>$userId,"postId"=>$param["postId"]));
         if(count($data) <= 0){
             Access::Respond(0,array(),"没有点过赞");
         }
         // 保存DB
         postPariseModel::del(array($data[0]["id"]));
-        postModel::delParise($postId);
+        postModel::delParise($param["postId"]);
         Access::Respond(1,array(),"取消点赞成功");
     }
 }

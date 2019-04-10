@@ -82,7 +82,7 @@ class reply extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数

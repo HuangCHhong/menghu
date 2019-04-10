@@ -31,7 +31,7 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
         $replyId = Access::MustParamDetect("replyId");
@@ -53,7 +53,7 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
         $replyId = Access::MustParamDetect("replyId");

@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Gateway;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -94,6 +95,10 @@ class reply extends Controller
         if(!$ok){
             Access::Respond(0,array(),"评论失败");
         }
+        // 评论成功后发送给发帖人
+        $post = PostModel::getById($data["postId"]);
+        Gateway::sendToUid($post["userId"],"收到一条评论，可立即查看");
+
         Access::Respond(1,array(),"评论成功");
     }
 }

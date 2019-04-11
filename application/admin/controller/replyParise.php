@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Gateway;
 use think\Controller;
 use app\common\model\Access;
 use app\common\model\Authority;
@@ -49,6 +50,11 @@ class replyParise extends Controller
         // 保存DB
         replyPariseModel::in(array("userId"=>$userId,"replyId"=>$param["replyId"]));
         replyModel::addParise($param["replyId"]);
+
+        //点赞成功推送给评论者
+        $reply = replyModel::getById($param["replyId"]);
+        Gateway::sendToUid($reply["userId"],"有用户对你的评论点了个赞，快点查看吧！");
+
         Access::Respond(1,array(),"点赞成功");
     }
 

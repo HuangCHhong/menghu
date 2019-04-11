@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Gateway;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -38,6 +39,10 @@ class Relationship extends Controller
         if(!$ok){
             Access::Respond(0,array(),"关注失败");
         }
+
+        // 关注成功推送给被关注者
+        Gateway::sendToUid($param["userId"],"有用户关注了你，快点查看吧");
+
         Access::Respond(1,array(),"关注成功");
     }
 

@@ -9,6 +9,7 @@
 namespace app\common\model;
 
 
+use app\admin\model\BlackList;
 use app\admin\model\User;
 
 class Authority
@@ -84,6 +85,13 @@ class Authority
         }
         $this->flag = Common::getSession (SESSION_FLAG);
         $this->userid = Common::getSession(SESSION_USERID);
+        //查找黑名单
+        $data = BlackList::getAll();
+        foreach ($data as $user){
+            if($user["userId"] == $this->userid){
+                Access::Respond (0, array(), '您已被加入黑名单，无权限登录');
+            }
+        }
         if (isset($this->userid) && isset($this->flag)
             && $this->userid != "" && $this->flag != "") {
         } else {

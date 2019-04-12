@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Gateway;
 use think\Controller;
 use app\common\model\Access;
 use app\common\model\Authority;
@@ -31,20 +32,29 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
-        $replyId = Access::MustParamDetect("replyId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("replyId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
 
         // 判断是否已经点过赞
-        $data = replyPariseModel::read(array("userId"=>$userId,"replyId"=>$replyId));
+        $data = replyPariseModel::read(array("userId"=>$userId,"replyId"=>$param["replyId"]));
         if(count($data) > 0){
             Access::Respond(0,array(),"已经点过赞");
         }
 
         // 保存DB
-        replyPariseModel::in(array("userId"=>$userId,"replyId"=>$replyId));
-        replyModel::addParise($replyId);
+        replyPariseModel::in(array("userId"=>$userId,"replyId"=>$param["replyId"]));
+        replyModel::addParise($param["replyId"]);
+
+        //点赞成功推送给评论者
+        $reply = replyModel::getById($param["replyId"]);
+        Gateway::sendToUid($reply["userId"],"有用户对你的评论点了个赞，快点查看吧！");
+
         Access::Respond(1,array(),"点赞成功");
     }
 
@@ -53,19 +63,24 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
-        $replyId = Access::MustParamDetect("replyId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("replyId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
+
 
         // 判断是否已经点过赞
-        $data = replyPariseModel::read(array("userId"=>$userId,"replyId"=>$replyId));
+        $data = replyPariseModel::read(array("userId"=>$userId,"replyId"=>$param["replyId"]));
         if(count($data) <= 0){
             Access::Respond(0,array(),"没有点过赞");
         }
         // 保存DB
         replyPariseModel::del(array($data[0]["id"]));
-        replyModel::delParise($replyId);
+        replyModel::delParise($param["replyId"]);
         Access::Respond(1,array(),"取消点赞成功");
     }
 }

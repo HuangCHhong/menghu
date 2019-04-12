@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Gateway;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -20,20 +21,28 @@ class Relationship extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $attUserId = Access::MustParamDetect("userId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("userId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
+
 
         // 检测是否已经关注
-        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($attUserId)));
+        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($param["userId"])));
         if(count($data) > 0){
             Access::Respond(0,array(),"已关注");
         }
-        $ok = relationshipModel::in(array("userId"=>$userId,"attUserId"=>$attUserId));
+        $ok = relationshipModel::in(array("userId"=>$userId,"attUserId"=>$param["userId"]));
         if(!$ok){
             Access::Respond(0,array(),"关注失败");
         }
+
+        // 关注成功推送给被关注者
+        Gateway::sendToUid($param["userId"],"有用户关注了你，快点查看吧");
+
         Access::Respond(1,array(),"关注成功");
     }
 
@@ -42,13 +51,16 @@ class Relationship extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
 
-        // 参数验证
-        $attUserId = Access::MustParamDetect("userId");
+        // 解析json
+        $param = Access::deljson_arr(file_get_contents("php://input"));
+        // 必选参数
+        $mustParam = array("userId");
+        Access::MustParamDetectOfRawData($mustParam,$param);
 
         // 检测是否已经关注
-        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($attUserId)));
+        $data = relationshipModel::read(array("userIdList"=>array($userId),"attUserIdList"=>array($param["userId"])));
         if(count($data) <= 0){
             Access::Respond(0,array(),"未关注");
         }

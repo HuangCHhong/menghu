@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 use app\common\model\Authority;
+use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Access;
 use app\admin\model\Info as InfoModel;
@@ -38,7 +39,14 @@ class Info extends Controller
             Access::MustParamDetectOfRawData($param,$data[$i]);
         }
         // 保存到DB
-        InfoModel::in($data);
+        $idList = InfoModel::in($data);
+        // 获取资讯
+        $infoList = InfoModel::read(array("idList"=>$idList));
+        // 添加到ES中
+        foreach ($infoList as $info){
+            Elastic::getInstance()->addDoc($info["id"],"info",$info);
+        }
+
         Access::Respond(1,array(),"添加成功");
     }
 

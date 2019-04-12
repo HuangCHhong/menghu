@@ -18,10 +18,9 @@ class reply extends Model
     public static function in($list)
     {
         try {
-            Db::table("reply")->insert($list);
-            return true;
+            return Db::table("reply")->insertGetId($list);
         } catch (\Exception $e) {
-            return false;
+           Access::Respond(0,array(),"评论失败");
         }
     }
 

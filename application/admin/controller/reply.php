@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\Gateway;
+use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -91,14 +92,13 @@ class reply extends Controller
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 存储到DB
         $data["userId"] = $userId;
-        $ok = replyModel::in($data);
-        if(!$ok){
-            Access::Respond(0,array(),"评论失败");
-        }
+        $id = replyModel::in($data);
+        // 存储到ES
+        $reply = replyModel::getById($id);
+        Elastic::getInstance()->addDoc($reply["id"],"reply",$reply);
         // 评论成功后发送给发帖人
         $post = PostModel::getById($data["postId"]);
         Gateway::sendToUid($post["userId"],"收到一条评论，可立即查看");
-
         Access::Respond(1,array(),"评论成功");
     }
 }

@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -70,10 +71,10 @@ class post extends Controller
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 存储到DB
         $data["userId"] = $userId;
-        $ok = PostModel::in($data);
-        if(!$ok){
-            Access::Respond(0,array(),"帖子发布失败");
-        }
+        $postId = PostModel::in($data);
+        $data = PostModel::read(array("id"=>$postId));
+        Elastic::getInstance()->addDoc($data[0]["id"],"post",$data[0]);
+
         Access::Respond(1,array(),"帖子发布成功");
     }
 

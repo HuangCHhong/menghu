@@ -27,10 +27,9 @@ class Post extends Model
 
     public static function in($list){
         try{
-            Db::table("post")->insert($list);
-            return true;
+            return Db::table("post")->insertGetId($list);
         }catch (\Exception $e){
-            return false;
+            Access::Respond(0,array(),"添加帖子失败");
         }
     }
 
@@ -67,7 +66,10 @@ class Post extends Model
             $sql .= " AND create_time > ".$list["firstTime"];
         }else if(isset($list["endTime"])){
             $sql .= " AND create_time <".$list["endTime"];
+        }else if(isset($list["content"])){
+            $sql .= " AND content like '%".$list["content"]."%'";
         }
+
         $result = Db::query($sql);
         return $result;
     }

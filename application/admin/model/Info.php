@@ -8,17 +8,22 @@
 
 namespace app\admin\model;
 
+use app\common\model\Access;
 use think\Db;
 use think\Model;
-
+use app\common\model\Common;
 class Info extends Model
 {
     public static function in($list){
         try{
-            Db::table("info")->data($list)->limit(100)->insertAll();
-            return true;
+            $idList = array();
+            foreach ($list as $data){
+                $id = Db::table("info")->insertGetId($data);
+                $idList = array_push($idList,$id);
+            }
+            return $idList;
         }catch (\Exception $e){
-            return false;
+            Access::Respond(0,array(),"添加资讯失败");
         }
     }
 
@@ -50,8 +55,14 @@ class Info extends Model
             $sql .= " AND create_time > ".$list["firstTime"];
         }else if(isset($list["endTime"])){
             $sql .= " AND create_time <".$list["endTime"];
+        }else if(isset($list["idList"])){
+            $str = Common::generateSQL($list["idList"]);
+            $sql .= " AND id In ".$str;
+        }else if(isset($list["title"])){
+            $sql .= " AND title like '%".$list["title"]."%'";
         }
         $result = Db::query($sql);
         return $result;
     }
+
 }

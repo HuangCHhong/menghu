@@ -143,4 +143,7 @@ return [
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
+    'APPID' => 'wx2d699c68fed420d9',
+    'SECRET'=>'92a32300d5e04e12f2e7ddf41b11bf0f',
+    'LINUX_HOST'=>'129.204.182.233',
 ];

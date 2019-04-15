@@ -23,7 +23,7 @@ return [
     define('ORDINARY',2),
     // 系统常量
     define('LINUX_HOST','129.204.182.233'),
-    define('APPID',''),
-    define('SECRET',''),
+    define('APPID','wx2d699c68fed420d9'),
+    define('SECRET','92a32300d5e04e12f2e7ddf41b11bf0f'),
 
 ];

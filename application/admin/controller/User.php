@@ -34,7 +34,11 @@ class User extends Controller
         if(!$ok) {
             Access::Respond(0, array(), "创建新用户失败");
         }
-        Access::Respond(1,UserModel::read($openid),"用户创建成功，请拉取用户数据");
+        $userInfo = UserModel::read($openid);
+        if(!$userInfo){
+            Access::Respond(0,array(),"拉取用户失败");
+        }
+        Access::Respond(1,$userInfo,"用户创建成功，请拉取用户数据");
     }
 
     // 设置用户开放数据
@@ -68,7 +72,11 @@ class User extends Controller
         if(!$ok){
             Access::Respond(0,array(),"修改基本信息失败");
         }
-        Access::Respond(1,UserModel::read($data["openId"]),"修改基本信息成功");
+        $userInfo = UserModel::read($data["openId"]);
+        if(!$userInfo){
+            Access::Respond(0,array(),"获取用户基本信息失败");
+        }
+        Access::Respond(1,$userInfo,"修改基本信息成功");
     }
 
     // GET：查看用户数据

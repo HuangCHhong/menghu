@@ -81,6 +81,9 @@ class Authority
         if(!Common::hasSesssion(Config::get("SESSION_FLAG"))){
             //从DB中获取此人的完整信息
             $userInfo = User::read($this->userid);
+            if(!$userInfo){
+                Access::Respond(0,array(),"拉取用户信息失败");
+            }
             Common::setSession(Config::get("SESSION_FLAG"),$userInfo["roleId"]);
             Common::setSession(Config::get("SESSION_USERID"),$userInfo["id"]);
         }

@@ -37,7 +37,7 @@ class User extends Model
         try{
            $result =  Db::table("user")->where('openId',$openid)->where('status',0)->find();
            if(count($result)<=0){
-              Access::Respond(0,array(),"该用户不存在");
+                return false;
            }
            return $result;
         }catch (\Exception $e){

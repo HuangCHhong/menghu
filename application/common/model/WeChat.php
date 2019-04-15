@@ -26,6 +26,7 @@ class WeChat extends Model
         ];
 
         $response =  Access::deljson_arr(Curl::sendget(self::$login_url,$param));
+        Access::Respond(1,$response,"看一下它的数据格式");
         if($response['errcode'] == 0){
             //暂时将用户的登录态记录到session中
             Common::setSession(Config::get("SESSION_OPENID"),$response['openid']);

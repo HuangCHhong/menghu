@@ -9,7 +9,7 @@
 namespace app\common\model;
 
 
-use think\Facade\Config;
+use \Config;
 use think\Model;
 use app\admin\model\User;
 use think\facade\Env;

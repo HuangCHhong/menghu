@@ -12,7 +12,6 @@ namespace app\common\model;
 use \Config;
 use think\Model;
 use app\admin\model\User;
-use think\facade\Env;
 class WeChat extends Model
 {
     private static $login_url = "https://api.weixin.qq.com/sns/jscode2session";
@@ -27,15 +26,15 @@ class WeChat extends Model
 
         $response =  Access::deljson_arr(Curl::sendget(self::$login_url,$param));
         Access::Respond(1,$response,"看一下它的数据格式");
-        if($response['errcode'] == 0){
+        if(isset($response['errcode']) && isset($response["SESSION_KEY"])){
             //暂时将用户的登录态记录到session中
             Common::setSession(Config::get("SESSION_OPENID"),$response['openid']);
             Common::setSession(Config::get("SESSION_KEY"),$response['session_key']);
-            Common::setSession(Config::get("SESSION_UNIONID"),$response['unionid']);
+//            Common::setSession(Config::get("SESSION_UNIONID"),$response['unionid']);
 
             return $response['openid'];
         }else {
-            Access::Respond(0,array(),$response['errmsg']);
+            Access::Respond(0,array(),"去微信服务器请求授权失败");
         }
     }
 

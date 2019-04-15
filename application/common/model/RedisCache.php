@@ -9,7 +9,7 @@
  */
 namespace app\common\model;
 use think\cache\driver\Redis;
-
+use think\facade\Config;
 class RedisCache extends Redis
 {
     private static $instance = null;
@@ -18,7 +18,7 @@ class RedisCache extends Redis
     public function __construct($options = [])
     {
         parent::__construct([
-            'host'       => LINUX_HOST,
+            'host'       => Config::get("LINUX_HOST"),
             'port'       => 6379,
             'password'   => '',
             'select'     => 0,

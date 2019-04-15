@@ -12,6 +12,8 @@ namespace app\admin\controller;
 use app\common\model\Access;
 use app\common\model\Authority;
 use app\admin\model\Gateway;
+use think\facade\Config;
+
 class Contact
 {
     // 小程序上线推送client_id
@@ -19,7 +21,7 @@ class Contact
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ADMIN,ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         //参数验证
         $client_id = Access::MustParamDetect('client_id');

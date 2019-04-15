@@ -14,6 +14,8 @@ use think\Controller;
 use app\common\model\WeChat;
 use app\common\model\Authority;
 use app\admin\model\User as UserModel;
+use think\facade\Config;
+
 class User extends Controller
 {
     // 构建登录态,首次登陆只返回openId供前段去调取用户基本信息；再次登陆就直接返回全量基本数据
@@ -60,7 +62,7 @@ class User extends Controller
         $mustParam = array("id");
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 权限检测
-        Authority::getInstance()->permit(array(ORDINARY))->check($data["id"]);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check($data["id"]);
 
         $ok = UserModel::upd($data["id"],$data);
         if(!$ok){
@@ -74,7 +76,7 @@ class User extends Controller
         //必选参数
         $userId = Access::MustParamDetect("id");
         // 权限设置
-        Authority::getInstance()->permit(array(ORDINARY,ADMIN))->check($userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY"),Config::get("ADMIN")))->check($userId);
         // 从数据库中获取相对应的值
         $data = UserModel::getByUserId($userId);
         Access::Respond(1,$data,"获取用户数据成功");
@@ -89,7 +91,7 @@ class User extends Controller
         Access::MustParamDetectOfRawData($mustParam,$data);
 
         // 权限检测
-        Authority::getInstance()->permit(array(ADMIN))->check(null);
+        Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         $data = UserModel::batchRead($data["idList"]);
         Access::Respond(1,$data,"批量获取用户数据成功");
     }

@@ -8,14 +8,11 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\facade;
+use think\facade\Config;
 class Index extends Controller
 {
     public function index(){
-       $arr = array(1,2,3);
-       foreach ($arr as &$data){
-           $data = 1;
-       }
-       print_r($arr);
+        echo Config::get("APPID");
+
     }
 }

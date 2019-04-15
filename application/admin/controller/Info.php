@@ -13,6 +13,8 @@ use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Access;
 use app\admin\model\Info as InfoModel;
+use think\facade\Config;
+
 class Info extends Controller
 {
     //获取动态资讯
@@ -30,7 +32,7 @@ class Info extends Controller
     //批量新增资讯
     public function batchAdd(){
         // 权限设置
-        Authority::getInstance()->permit(array(ADMIN))->check(null);
+        Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必传参数
@@ -53,7 +55,7 @@ class Info extends Controller
     // 删除资讯
     public function batchDel(){
         // 权限设置
-        Authority::getInstance()->permit(array(ADMIN))->check(null);
+        Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必传参数
@@ -67,7 +69,7 @@ class Info extends Controller
     // 更新资讯
     public function updateInfo(){
         // 权限设置
-        Authority::getInstance()->permit(array(ADMIN))->check(null);
+        Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必传参数

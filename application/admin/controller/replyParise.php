@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\Gateway;
+use think\Config;
 use think\Controller;
 use app\common\model\Access;
 use app\common\model\Authority;
@@ -32,7 +33,7 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(\think\facade\Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
         // 解析json
@@ -63,7 +64,7 @@ class replyParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(\think\facade\Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
         // 解析json

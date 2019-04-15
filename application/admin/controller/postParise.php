@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\Gateway;
+use think\Config;
 use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
@@ -32,7 +33,7 @@ class postParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(\think\facade\Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));
@@ -62,7 +63,7 @@ class postParise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permitAll(array(\think\facade\Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));

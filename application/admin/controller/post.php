@@ -14,6 +14,8 @@ use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
 use app\admin\model\Post as PostModel;
+use think\facade\Config;
+
 class post extends Controller
 {
     // 查看帖子信息
@@ -48,9 +50,9 @@ class post extends Controller
         // 权限验证
         if(count($userList) > 1){
             // 涉及到多个用户的帖子，则只有管理员才有权限操作
-            Authority::getInstance()->permit(array(ADMIN))->check(null);
+            Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         }
-        Authority::getInstance()->permit(array(ADMIN,ORDINARY))->check($userList[0]);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check($userList[0]);
         // 帖子删除
         $ok = PostModel::del($postIdList);
         if(!$ok){
@@ -63,7 +65,7 @@ class post extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
@@ -86,7 +88,7 @@ class post extends Controller
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 权限校准
         $data = PostModel::getById($data["id"]);
-        Authority::getInstance()->permit(array(ORDINARY))->check($data["userId"]);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check($data["userId"]);
         // 更新帖子
         PostModel::upd($data["id"],$data);
     }

@@ -146,4 +146,16 @@ return [
     'APPID' => 'wx2d699c68fed420d9',
     'SECRET'=>'92a32300d5e04e12f2e7ddf41b11bf0f',
     'LINUX_HOST'=>'129.204.182.233',
+
+    // session
+    'SESSION_OPENID'=>'openId',
+    'SESSION_USERID'=> 'openId',
+    'SESSION_KEY'=>'session_key',
+    'SESSION_UNIONID'=> 'unionid',
+    'SESSION_FLAG'=> 'flag',
+    // Gateway注册地址
+    'REGISTER_ADD'=>'129.204.182.233:1238',
+    // 角色映射
+    'ADMIN'=>1,
+    'ORDINARY'=>2,
 ];

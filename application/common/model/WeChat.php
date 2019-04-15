@@ -9,17 +9,18 @@
 namespace app\common\model;
 
 
+use think\Facade\Config;
 use think\Model;
 use app\admin\model\User;
-
+use think\facade\Env;
 class WeChat extends Model
 {
     private static $login_url = "https://api.weixin.qq.com/sns/jscode2session";
 
     public static function getAppId($code){
         $param = [
-            'appid'=>APPID,
-            'secret'=>SECRET,
+            'appid'=>Config::get("APPID"),
+            'secret'=>Config::get("SECRET"),
             'js_code'=>$code,
             'grant_type'=>'authorization_code',
         ];
@@ -27,9 +28,9 @@ class WeChat extends Model
         $response =  Access::deljson_arr(Curl::sendget(self::$login_url,$param));
         if($response['errcode'] == 0){
             //暂时将用户的登录态记录到session中
-            Common::setSession(SESSION_OPENID,$response['openid']);
-            Common::setSession(SESSION_KEY,$response['session_key']);
-            Common::setSession(SESSION_UNIONID,$response['unionid']);
+            Common::setSession(Config::get("SESSION_OPENID"),$response['openid']);
+            Common::setSession(Config::get("SESSION_KEY"),$response['session_key']);
+            Common::setSession(Config::get("SESSION_UNIONID"),$response['unionid']);
 
             return $response['openid'];
         }else {

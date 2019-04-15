@@ -18,6 +18,8 @@ use app\admin\model\reply as replyModel;
 use app\admin\model\User as UserModel;
 use app\admin\model\Post as PostModel;
 use app\admin\model\weight as weightModel;
+use think\facade\Config;
+
 class reply extends Controller
 {
     // 查看回复详情
@@ -69,9 +71,9 @@ class reply extends Controller
         // 权限验证
         if(count($userList) > 1){
             // 涉及到多个用户的帖子，则只有管理员才有权限操作
-            Authority::getInstance()->permit(array(ADMIN))->check(null);
+            Authority::getInstance()->permit(array(Config::get("ADMIN")))->check(null);
         }
-        Authority::getInstance()->permit(array(ADMIN,ORDINARY))->check($userList[0]);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check($userList[0]);
         // 帖子删除
         $ok = replyModel::del($replyIdList);
         if(!$ok){
@@ -84,7 +86,7 @@ class reply extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数

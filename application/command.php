@@ -10,20 +10,6 @@
 // +----------------------------------------------------------------------
 
 return [
-    // session
-    define ('SESSION_OPENID', 'openId'),
-    define ('SESSION_USERID', 'openId'),
-    define ('SESSION_KEY', 'session_key'),
-    define ('SESSION_UNIONID', 'unionid'),
-    define ('SESSION_FLAG', 'flag'),
-    // Gateway注册地址
-    define ('REGISTER_ADD','129.204.182.233:1238'),
-    // 角色映射
-    define('ADMIN',1),
-    define('ORDINARY',2),
-    // 系统常量
-    define('LINUX_HOST','129.204.182.233'),
-    define('APPID','wx2d699c68fed420d9'),
-    define('SECRET','92a32300d5e04e12f2e7ddf41b11bf0f'),
+
 
 ];

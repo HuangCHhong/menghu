@@ -11,6 +11,7 @@ namespace app\common\model;
 
 use app\admin\model\BlackList;
 use app\admin\model\User;
+use think\facade\Config;
 
 class Authority
 {
@@ -76,15 +77,15 @@ class Authority
      * 获取登陆的session
      */
     private function _loadSession () {
-        $this->openId = Common::getSession (SESSION_OPENID);
-        if(!Common::hasSesssion(SESSION_FLAG)){
+        $this->openId = Common::getSession (Config::get("SESSION_OPENID"));
+        if(!Common::hasSesssion(Config::get("SESSION_FLAG"))){
             //从DB中获取此人的完整信息
             $userInfo = User::read($this->userid);
-            Common::setSession(SESSION_FLAG,$userInfo["roleId"]);
-            Common::setSession(SESSION_USERID,$userInfo["id"]);
+            Common::setSession(Config::get("SESSION_FLAG"),$userInfo["roleId"]);
+            Common::setSession(Config::get("SESSION_USERID"),$userInfo["id"]);
         }
-        $this->flag = Common::getSession (SESSION_FLAG);
-        $this->userid = Common::getSession(SESSION_USERID);
+        $this->flag = Common::getSession (Config::get("SESSION_FLAG"));
+        $this->userid = Common::getSession(Config::get("SESSION_USERID"));
         //查找黑名单
         $data = BlackList::getAll();
         foreach ($data as $user){
@@ -113,7 +114,7 @@ class Authority
             if(empty($userId)){
                 return true;
             }
-            if ($this->flag == ADMIN){
+            if ($this->flag == Config::get("ADMIN")){
                 return true;
             }else{
                 if ($this->userid == $userId){
@@ -124,7 +125,7 @@ class Authority
             }
         }
         foreach ($this->permitList as $permit){
-            if ($permit == ORDINARY && $this->flag == ORDINARY){
+            if ($permit == Config::get("ORDINARY") && $this->flag == Config::get("ORDINARY")){
                 if(empty($userId)){
                     return true;
                 }
@@ -134,7 +135,7 @@ class Authority
                     Access::Respond (0, array(), '此账户没有访问权限');
                 }
             }
-            if ($permit == ADMIN && $this->flag == ADMIN){
+            if ($permit == Config::get("ADMIN") && $this->flag == Config::get("ADMIN")){
                 return true;
             }
         }

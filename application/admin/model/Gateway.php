@@ -8,10 +8,12 @@
 
 namespace app\admin\model;
 use GatewayClient\Gateway as GatewaySrc;
+use think\facade\Config;
+
 class Gateway
 {
    public static function bind($uid,$client_id){
-       GatewaySrc::$registerAddress = REGISTER_ADD;
+       GatewaySrc::$registerAddress = Config::get("REGISTER_ADD");
 
     // client_id与uid绑定
        GatewaySrc::bindUid($client_id, $uid);
@@ -20,14 +22,14 @@ class Gateway
    }
 
    public static function sendToUid($uid,$message){
-       GatewaySrc::$registerAddress = REGISTER_ADD;
+       GatewaySrc::$registerAddress = Config::get("REGISTER_ADD");
 
     // 向任意uid的网站页面发送数据
        GatewaySrc::sendToUid($uid, $message);
    }
 
    public static function sendToGroup($group,$message){
-       GatewaySrc::$registerAddress = REGISTER_ADD;
+       GatewaySrc::$registerAddress = Config::get("REGISTER_ADD");
 
        // 向任意uid的网站页面发送数据
        GatewaySrc::sendToUid($group, $message);

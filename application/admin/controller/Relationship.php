@@ -14,6 +14,8 @@ use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
 use app\admin\model\relationship as relationshipModel;
+use think\facade\Config;
+
 class Relationship extends Controller
 {
     // 添加关注
@@ -21,7 +23,7 @@ class Relationship extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));
@@ -51,7 +53,7 @@ class Relationship extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(ORDINARY))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));

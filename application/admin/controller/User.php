@@ -26,11 +26,11 @@ class User extends Controller
         $openid = WeChat::getAppId($code);
         // 检测该用户是否曾经登录过
         $result = UserModel::read($openid);
-        if(count($result) ==  1){
+        if(is_array($result) && count($result) ==  1){
             Access::Respond(1,$result,"信息获取成功");
         }
         // 如果是新用户，则创建并存储到DB中
-        $ok = UserModel::in(array("openid"=>$openid));
+        $ok = UserModel::in(array("openId"=>$openid));
         if(!$ok) {
             Access::Respond(0, array(), "创建新用户失败");
         }

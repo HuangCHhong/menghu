@@ -41,7 +41,7 @@ class User extends Model
            }
            return $result;
         }catch (\Exception $e){
-            Access::Respond(0,array(),"查询用户失败");
+            return false;
         }
     }
 

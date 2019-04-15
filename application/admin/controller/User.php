@@ -72,7 +72,7 @@ class User extends Controller
         if(!$ok){
             Access::Respond(0,array(),"修改基本信息失败");
         }
-        $userInfo = UserModel::read($data["openId"]);
+        $userInfo = UserModel::getByUserId($data["id"]);
         if(!$userInfo){
             Access::Respond(0,array(),"获取用户基本信息失败");
         }

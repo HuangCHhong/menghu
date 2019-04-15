@@ -24,7 +24,7 @@ class Authority
     private $permitList = null;             // 允许的登陆组
 
     public function __construct () {
-        $this->instance = null;
+        self::$instance = null;
         $this->userid = null;
         $this->flag = null;
         $this->permitallenable = false;

@@ -12,7 +12,7 @@ use think\facade\Config;
 class Index extends Controller
 {
     public function index(){
-        echo Config::get("APPID");
-
+        $userInfo = \app\admin\model\User::read(1);
+        echo json_encode($userInfo);
     }
 }

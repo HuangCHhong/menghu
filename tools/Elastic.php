@@ -8,7 +8,7 @@
 
 require "../vendor/autoload.php";
 
-$client = Elasticsearch\ClientBuilder::create()->build();
+$client = Elasticsearch\ClientBuilder::create()->setHosts(array('129.204.182.233:9200'))->build();
 
 // 创建帖子索引
 $params = [

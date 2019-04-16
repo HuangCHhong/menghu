@@ -71,4 +71,18 @@ class Elastic
         $this->clinet->index($param);
     }
 
+    // 创建索引
+    public function createIndex($index,$mapping){
+         $params = [
+            'index' =>$index,
+            'body'=>[
+                'settings'=>[
+                    'number_of_shards'=>2,
+                    'number_of_replicas'=>0
+                ],
+                "mappings"=>$mapping
+            ]
+        ];
+        $this->clinet->indices()->create($params);
+    }
 }

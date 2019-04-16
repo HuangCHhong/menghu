@@ -14,12 +14,12 @@ $client = Elasticsearch\ClientBuilder::create()->setHosts(array('129.204.182.233
 $params = [
   'index' => 'post',
   'body'=>[
-      'setting'=>[
+      'settings'=>[
           'number_of_shards'=>2,
           'number_of_replicas'=>0
       ],
-      "mapping"=>[
-          "_default"=>[
+      "mappings"=>[
+          "default"=>[
               "properties"=>[
                   "userId"=> [
                       "type" => "integer"
@@ -60,12 +60,12 @@ echo "创建帖子索引成功:".$response."\r\n";
 $params = [
     'index' => 'reply',
     'body'=>[
-        'setting'=>[
+        'settings'=>[
             'number_of_shards'=>2,
             'number_of_replicas'=>0
         ],
-        "mapping"=>[
-            "_default"=>[
+        "mappings"=>[
+            "default"=>[
                 "properties"=>[
                     "userId"=> [
                         "type" => "integer"
@@ -106,12 +106,12 @@ echo "创建评论索引成功:".$response."\r\n";
 $params = [
     'index' => 'info',
     'body'=>[
-        'setting'=>[
+        'settings'=>[
             'number_of_shards'=>2,
             'number_of_replicas'=>0
         ],
-        "mapping"=>[
-            "_default"=>[
+        "mappings"=>[
+            "default"=>[
                 "properties"=>[
                     "title"=>[
                         "type" => "text",

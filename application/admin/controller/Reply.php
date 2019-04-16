@@ -20,7 +20,7 @@ use app\admin\model\Post as PostModel;
 use app\admin\model\weight as weightModel;
 use think\facade\Config;
 
-class reply extends Controller
+class Reply extends Controller
 {
     // 查看回复详情
     public function getReplyInfo(){
@@ -63,8 +63,8 @@ class reply extends Controller
         $replyIdList = array();
         $replyInfos = replyModel::read($data);
         foreach ($replyInfos as $replyInfo){
-            $userList = array_push($userList,$replyInfo["userId"]);
-            $replyIdList = array_push($postIdList,$replyInfo["id"]);
+            array_push($userList,$replyInfo["userId"]);
+            array_push($postIdList,$replyInfo["id"]);
         }
         $userList = array_unique($userList);
         $replyIdList = array_unique($replyIdList);

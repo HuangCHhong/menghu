@@ -49,7 +49,7 @@ class Access
     public static function MustParamDetectOfList ($listKeys) {
         // 必须参数
         foreach ($listKeys as $key=>$value){
-            $listKeys[$key]=Access::MustParamDetect ($key);
+            $listKeys[$value]=Access::MustParamDetect ($value);
         }
         return $listKeys;
     }
@@ -91,7 +91,7 @@ class Access
      */
     public static function OptionalParamOfList ($listKeys) {
         foreach ($listKeys as $key=>$value){
-            $listKeys[$key]=Access::OptionalParam ($key);
+            $listKeys[$value]=Access::OptionalParam ($value);
         }
         return $listKeys;
     }

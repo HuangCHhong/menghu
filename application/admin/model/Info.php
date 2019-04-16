@@ -19,7 +19,7 @@ class Info extends Model
             $idList = array();
             foreach ($list as $data){
                 $id = Db::table("info")->insertGetId($data);
-                $idList = array_push($idList,$id);
+                array_push($idList,$id);
             }
             return $idList;
         }catch (\Exception $e){

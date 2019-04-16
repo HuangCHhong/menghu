@@ -158,4 +158,8 @@ return [
     // 角色映射
     'ADMIN'=>1,
     'ORDINARY'=>2,
+    // ElasticSearch
+    'ElASTIC_HOST'=>[
+        '129.204.182.233:9200'
+    ]
 ];

@@ -9,13 +9,15 @@
 namespace app\common\model;
 
 use Elasticsearch\ClientBuilder;
+use think\facade\Config;
+
 class Elastic
 {
     private static $instance = null;
     public $clinet = null;
 
     public function __construct(){
-        $this->clinet =  ClientBuilder::create()->build();
+        $this->clinet =  ClientBuilder::create()->setHosts(Config::get("ElASTIC_HOST"))->build();
     }
 
     //文档格式转换
@@ -42,6 +44,7 @@ class Elastic
         self::convert($data);
         $param = [
             "index"=>$index,
+            "type"=>$index,
             'id'=>$id,
             "body"=>$data
         ];

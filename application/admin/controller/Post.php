@@ -16,7 +16,7 @@ use app\common\model\Access;
 use app\admin\model\Post as PostModel;
 use think\facade\Config;
 
-class post extends Controller
+class Post extends Controller
 {
     // 查看帖子信息
     public function getPostInfo(){
@@ -35,15 +35,15 @@ class post extends Controller
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
-        $mustParam = array("idLIst");
+        $mustParam = array("idList");
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 获取帖子所有者
         $userList = array();
         $postIdList = array();
         $postInfos = PostModel::read($data);
         foreach ($postInfos as $postInfo){
-            $userList = array_push($userList,$postInfo["userId"]);
-            $postIdList = array_push($postIdList,$postInfo["id"]);
+            array_push($userList,$postInfo["userId"]);
+            array_push($postIdList,$postInfo["id"]);
         }
         $userList = array_unique($userList);
         $postIdList = array_unique($postIdList);
@@ -65,11 +65,12 @@ class post extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
+//        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
+        $userId = 1;
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
-        $mustParam = array("content,typeId");
+        $mustParam = array("content","typeId");
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 存储到DB
         $data["userId"] = $userId;

@@ -34,6 +34,7 @@ class Common extends Model
         foreach ($idList as $id){
             $str .= $id.',';
         }
+        $str = rtrim($str,",");
         $str .= ")";
         return $str;
     }

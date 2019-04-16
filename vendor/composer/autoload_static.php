@@ -36,6 +36,7 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
             'GuzzleHttp\\Stream\\' => 18,
             'GuzzleHttp\\Ring\\' => 16,
             'GatewayWorker\\' => 14,
+            'GatewayClient\\' => 14,
         ),
         'E' => 
         array (
@@ -75,6 +76,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         'GatewayWorker\\' => 
         array (
             0 => __DIR__ . '/..' . '/workerman/gateway-worker/src',
+        ),
+        'GatewayClient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gatewayclient',
         ),
         'Elasticsearch\\' => 
         array (

@@ -14,5 +14,6 @@ return array(
     'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),
     'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),
     'GatewayWorker\\' => array($vendorDir . '/workerman/gateway-worker/src'),
+    'GatewayClient\\' => array($vendorDir . '/workerman/gatewayclient'),
     'Elasticsearch\\' => array($vendorDir . '/elasticsearch/elasticsearch/src/Elasticsearch'),
 );

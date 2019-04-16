@@ -52,7 +52,7 @@ class Post extends Model
     }
 
     public static function read($list){
-        $sql = "select id,userId,content,parise,anonymous,typeId,create_time,update_time from post where status=0";
+        $sql = "select id,userId,content,praise,anonymous,typeId,create_time,update_time from post where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
         }else if(isset($list["idList"])){
@@ -77,13 +77,13 @@ class Post extends Model
     // 点赞数递增
     public static function addParise($postId){
         $data = self::getById($postId);
-        $data["parse"]++;
+        $data["praise"]++;
         return self::upd($data["id"],$data);
     }
     // 点赞数递减
     public static function delParise($postId){
         $data = self::getById($postId);
-        $data["parse"]--;
+        $data["praise"]--;
         return self::upd($data["id"],$data);
     }
 

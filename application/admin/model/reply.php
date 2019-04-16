@@ -46,14 +46,14 @@ class reply extends Model
 
     public static function read($list)
     {
-        $sql = "select id,postId,userId,content,parse,anonymous,create_time,update_time from reply where status=0";
+        $sql = "select id,postId,userId,content,praise,anonymous,create_time,update_time from reply where status=0";
         if (isset($list["id"])) {
             $sql .= " AND id=" . $list["id"];
         } else if (isset($list["idList"])) {
             $str = Common::generateSQL($list["idList"]);
             $sql .= " AND id In " . $str;
         } else if (isset($list["postId"])) {
-            $sql .= "AND postId=" . $list["postId"];
+            $sql .= " AND postId=" . $list["postId"];
         } else if (isset($list["userId"])) {
             $sql .= " AND userId=" . $list["userId"];
         }

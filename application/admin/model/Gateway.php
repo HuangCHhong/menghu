@@ -5,7 +5,6 @@
  * Date: 2019/4/11
  * Time: 9:17
  */
-
 namespace app\admin\model;
 use GatewayClient\Gateway as GatewaySrc;
 use think\facade\Config;

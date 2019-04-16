@@ -19,6 +19,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         array (
             'app\\' => 4,
         ),
+        'W' => 
+        array (
+            'Workerman\\' => 10,
+        ),
         'R' => 
         array (
             'React\\Promise\\' => 14,
@@ -31,6 +35,7 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         array (
             'GuzzleHttp\\Stream\\' => 18,
             'GuzzleHttp\\Ring\\' => 16,
+            'GatewayWorker\\' => 14,
         ),
         'E' => 
         array (
@@ -47,6 +52,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         array (
             0 => __DIR__ . '/../..' . '/application',
         ),
+        'Workerman\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/workerman',
+        ),
         'React\\Promise\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
@@ -62,6 +71,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         'GuzzleHttp\\Ring\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/ringphp/src',
+        ),
+        'GatewayWorker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/workerman/gateway-worker/src',
         ),
         'Elasticsearch\\' => 
         array (

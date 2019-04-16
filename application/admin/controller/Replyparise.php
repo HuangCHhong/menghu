@@ -34,7 +34,6 @@ class Replyparise extends Controller
         $userId = null;
         $flag = null;
         Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
-
         // 参数验证
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));

@@ -74,13 +74,13 @@ class reply extends Model
     // 点赞数递增
     public static function addParise($replyId){
         $data = self::getById($replyId);
-        $data["parse"]++;
+        $data["praise"]++;
         return self::upd($data["id"],$data);
     }
     // 点赞数递减
     public static function delParise($replyId){
         $data = self::getById($replyId);
-        $data["parse"]--;
+        $data["praise"]--;
         return self::upd($data["id"],$data);
     }
 }

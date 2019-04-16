@@ -44,7 +44,7 @@ class Elastic
         self::convert($data);
         $param = [
             "index"=>$index,
-            "type"=>$index,
+            "type"=>"default",
             'id'=>$id,
             "body"=>$data
         ];

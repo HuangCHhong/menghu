@@ -14,7 +14,7 @@ use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
 use app\admin\model\Post as PostModel;
-use think\facade\Config;
+use \Config;
 
 class Post extends Controller
 {

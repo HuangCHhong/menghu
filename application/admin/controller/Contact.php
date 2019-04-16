@@ -12,7 +12,7 @@ namespace app\admin\controller;
 use app\common\model\Access;
 use app\common\model\Authority;
 use app\admin\model\Gateway;
-use think\facade\Config;
+use \Config;
 
 class Contact
 {

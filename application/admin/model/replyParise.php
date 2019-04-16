@@ -45,7 +45,7 @@ class replyParise extends Model
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
         }else if(isset($list["userId"])){
-            $sql .= "AND userId=".$list["userId"];
+            $sql .= " AND userId=".$list["userId"];
         }else if(isset($list["replyId"])){
             $sql .= " AND replyId=".$list["replyId"];
         }

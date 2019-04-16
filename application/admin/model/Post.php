@@ -59,7 +59,7 @@ class Post extends Model
            $str = Common::generateSQL($list["idList"]);
             $sql .= " AND id In ".$str;
         }else if(isset($list["typeId"])){
-            $sql .= "AND typeId=".$list["typeId"];
+            $sql .= " AND typeId=".$list["typeId"];
         }else if(isset($list["userId"])){
             $sql .= " AND userId=".$list["userId"];
         }else if(isset($list["firstTime"])){

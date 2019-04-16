@@ -14,7 +14,7 @@ use think\Controller;
 use app\common\model\WeChat;
 use app\common\model\Authority;
 use app\admin\model\User as UserModel;
-use think\facade\Config;
+use \Config;
 
 class User extends Controller
 {

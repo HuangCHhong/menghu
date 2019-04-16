@@ -45,7 +45,7 @@ class postParise extends Model
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
         }else if(isset($list["userId"])){
-            $sql .= "AND userId=".$list["userId"];
+            $sql .= " AND userId=".$list["userId"];
         }else if(isset($list["postId"])){
             $sql .= " AND postId=".$list["postId"];
         }

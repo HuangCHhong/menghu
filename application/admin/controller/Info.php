@@ -13,7 +13,7 @@ use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Access;
 use app\admin\model\Info as InfoModel;
-use think\facade\Config;
+use \Config;
 
 class Info extends Controller
 {

@@ -14,7 +14,7 @@ use think\Controller;
 use app\common\model\Authority;
 use app\common\model\Access;
 use app\admin\model\relationship as relationshipModel;
-use think\facade\Config;
+use \Config;
 
 class Relationship extends Controller
 {

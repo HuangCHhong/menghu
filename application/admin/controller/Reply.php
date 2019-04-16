@@ -18,7 +18,7 @@ use app\admin\model\reply as replyModel;
 use app\admin\model\User as UserModel;
 use app\admin\model\Post as PostModel;
 use app\admin\model\weight as weightModel;
-use think\facade\Config;
+use \Config;
 
 class Reply extends Controller
 {

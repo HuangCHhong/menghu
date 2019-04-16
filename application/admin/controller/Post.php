@@ -65,8 +65,7 @@ class Post extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-//        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
-        $userId = 1;
+        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数

@@ -90,7 +90,7 @@ class Reply extends Controller
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
-        $mustParam = array("content,postId");
+        $mustParam = array("content","postId");
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 存储到DB
         $data["userId"] = $userId;

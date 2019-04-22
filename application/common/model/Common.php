@@ -23,8 +23,12 @@ class Common extends Model
     }
 
     // 设置session
-    public static function setSession($key,$value){
+    public static function setSession($key,$value,$flag=true){
         //获取session_id
+        if($flag){
+            $session_id = Access::MustParamDetect('session_id');
+            session_id($session_id);
+        }
         session_start();
         $_SESSION[$key] = $value;
 //        \think\facade\Session::set($key,$value);

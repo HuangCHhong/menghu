@@ -78,6 +78,7 @@ class Authority
      */
     private function _loadSession () {
         $this->openId = Common::getSession (Config::get("SESSION_OPENID"));
+        Access::Respond(0,array(),$this->openId);
         if(!Common::hasSesssion(Config::get("SESSION_FLAG"))){
             //从DB中获取此人的完整信息
             $userInfo = User::read($this->userid);

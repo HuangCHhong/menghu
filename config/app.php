@@ -149,7 +149,7 @@ return [
 
     // session
     'SESSION_OPENID'=>'openId',
-    'SESSION_USERID'=> 'openId',
+    'SESSION_USERID'=> 'userId',
     'SESSION_KEY'=>'session_key',
     'SESSION_UNIONID'=> 'unionid',
     'SESSION_FLAG'=> 'flag',

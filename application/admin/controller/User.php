@@ -14,6 +14,7 @@ use think\Controller;
 use app\common\model\WeChat;
 use app\common\model\Authority;
 use app\admin\model\User as UserModel;
+use app\common\model\Common;
 use \Config;
 
 class User extends Controller
@@ -26,7 +27,7 @@ class User extends Controller
         $openid = WeChat::getAppId($code);
         // 检测该用户是否曾经登录过
         $result = UserModel::read($openid);
-        if(is_array($result) && count($result) ==  1){
+        if(is_array($result) && count($result) >=  1){
             Access::Respond(1,$result,"信息获取成功");
         }
         // 如果是新用户，则创建并存储到DB中
@@ -34,11 +35,12 @@ class User extends Controller
         if(!$ok) {
             Access::Respond(0, array(), "创建新用户失败");
         }
-        $userInfo = UserModel::read($openid);
-        if(!$userInfo){
+        $result = UserModel::read($openid);
+        if(!$result){
             Access::Respond(0,array(),"拉取用户失败");
         }
-        Access::Respond(1,$userInfo,"用户创建成功，请拉取用户数据");
+        Common::setSession(Config::get("SESSION_USERID"),$result["id"]);
+        Access::Respond(1,$result,"用户创建成功");
     }
 
     // 设置用户开放数据

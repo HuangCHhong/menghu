@@ -25,6 +25,7 @@ class User extends Controller
         $code = Access::MustParamDetect("code");
         // 设置对应的OpenId和session_key
         $openid = WeChat::getAppId($code);
+//        $openid = 123424;
         // 检测该用户是否曾经登录过
         $result = UserModel::read($openid);
         if(is_array($result) && count($result) >=  1){

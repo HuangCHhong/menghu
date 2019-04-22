@@ -12,6 +12,7 @@ namespace app\common\model;
 use \Config;
 use think\Model;
 use app\admin\model\User;
+use app\common\model\Common;
 class WeChat extends Model
 {
     private static $login_url = "https://api.weixin.qq.com/sns/jscode2session";
@@ -56,7 +57,11 @@ class WeChat extends Model
             'openid'=>$rawData['roleId'],
             'city'=>$rawData['city'],
             'avatarUrl'=>$rawData['avatarUrl'],
+            'roleId'=>$rawData['roleId'],
         );
+        // 存储session
+        Common::setSession(Config::get("SESSION_FLAG"),$rawData["roleId"]);
+
         if(User::upd($rawData["id"],$data)){
             return true;
         }else{

@@ -6,7 +6,7 @@
  * Time: 9:14
  */
 namespace app\common\model;
-
+use app\common\model\Common;
 class Access
 {
     /**
@@ -15,6 +15,8 @@ class Access
     public static function Respond ($code, $data, $msg) {
 
         $mes = array();
+        //添加sessionId
+        $data['session_id'] = Common::sessionId();
         $mes['data']=$data;
         $mes['code']=$code;
         $mes['url']='';

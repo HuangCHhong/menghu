@@ -7,12 +7,17 @@
  */
 namespace app\admin\controller;
 
+use app\common\model\Access;
 use think\Controller;
 use think\facade\Config;
+use app\common\model\Common;
 class Index extends Controller
 {
     public function index(){
-        $userInfo = \app\admin\model\User::read(1);
-        echo json_encode($userInfo);
+        Common::setSession("name","holden");
+        Access::Respond(0,array(),"success");
+    }
+    public function index1(){
+        echo Common::getSession("name");
     }
 }

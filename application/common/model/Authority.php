@@ -78,7 +78,6 @@ class Authority
      */
     private function _loadSession () {
         $this->openId = Common::getSession (Config::get("SESSION_OPENID"));
-        Access::Respond(0,array(),$this->openId);
         if(!Common::hasSesssion(Config::get("SESSION_FLAG"))){
             //从DB中获取此人的完整信息
             $userInfo = User::read($this->userid);
@@ -97,7 +96,7 @@ class Authority
                 Access::Respond (0, array(), '您已被加入黑名单，无权限登录');
             }
         }
-        if (isset($this->userid) && $this->userid != "") {
+        if (isset($this->userid) && isset($this->flag) && $this->userid != "" && $this->flag != "") {
         } else {
             Access::Respond (0, array(), '请先进行登录');
         }

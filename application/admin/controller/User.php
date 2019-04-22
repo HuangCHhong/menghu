@@ -28,6 +28,8 @@ class User extends Controller
         // 检测该用户是否曾经登录过
         $result = UserModel::read($openid);
         if(is_array($result) && count($result) >=  1){
+            Common::setSession(Config::get("SESSION_USERID"),$result["id"]);
+            Common::setSession(Config::get("SESSION_FLAG"),$result["roleId"]);
             Access::Respond(1,$result,"信息获取成功");
         }
         // 如果是新用户，则创建并存储到DB中
@@ -40,7 +42,7 @@ class User extends Controller
             Access::Respond(0,array(),"拉取用户失败");
         }
         Common::setSession(Config::get("SESSION_USERID"),$result["id"]);
-        Access::Respond(1,$result,"用户创建成功");
+        Access::Respond(1,$result,"用户创建成功,请获取用户信息");
     }
 
     // 设置用户开放数据
@@ -50,7 +52,7 @@ class User extends Controller
         // 必选参数
         $mustParam = array("rawData","signature");
         Access::MustParamDetectOfRawData($mustParam,$data);
-        $mustParam = array("id","nickName","roleId","city","avatarUrl");
+        $mustParam = array("id","nickName","roleId","city","avatarUrl","roleId");
         Access::MustParamDetectOfRawData($mustParam,$data["rawData"]);
 
         $ok = WeChat::setUserInfo($data["rawData"],$data["signature"]);

@@ -14,14 +14,30 @@ use think\Session;
 
 class Common extends Model
 {
+    // 获取session_id
+    public static function sessionId(){
+        if (PHP_SESSION_ACTIVE != session_status()) {
+            session_start();
+        }
+        return session_id();
+    }
+
     // 设置session
     public static function setSession($key,$value){
-        \think\facade\Session::set($key,$value);
+        //获取session_id
+        session_start();
+        $_SESSION[$key] = $value;
+//        \think\facade\Session::set($key,$value);
     }
 
     // 获取session
     public static function getSession($key){
-        \think\facade\Session::get($key);
+        //获取session_id
+        $session_id = Access::MustParamDetect('session_id');
+        session_id($session_id);
+        session_start();
+        return $_SESSION[$key];
+//        return \think\facade\Session::get($key);
     }
 
     public static function hasSesssion($key){

@@ -14,7 +14,7 @@ use app\common\model\Common;
 class Index extends Controller
 {
     public function index(){
-        Common::setSession("name","holden");
+        Common::setSession("name","holden",false);
         Access::Respond(0,array(),"success");
     }
     public function index1(){

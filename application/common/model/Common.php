@@ -16,9 +16,9 @@ class Common extends Model
 {
     // 获取session_id
     public static function sessionId(){
-        if (PHP_SESSION_ACTIVE != session_status()) {
-            session_start();
-        }
+//        if (PHP_SESSION_ACTIVE != session_status()) {
+//            session_start();
+//        }
         return session_id();
     }
 

@@ -29,9 +29,9 @@ class Common extends Model
             $session_id = Access::MustParamDetect('session_id');
             session_id($session_id);
         }
-        session_start();
-        $_SESSION[$key] = $value;
-//        \think\facade\Session::set($key,$value);
+//        session_start();
+//        $_SESSION[$key] = $value;
+        \think\facade\Session::set($key,$value);
     }
 
     // 获取session

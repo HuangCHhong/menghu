@@ -96,8 +96,7 @@ class Authority
                 Access::Respond (0, array(), '您已被加入黑名单，无权限登录');
             }
         }
-        if (isset($this->userid) && isset($this->flag)
-            && $this->userid != "" && $this->flag != "") {
+        if (isset($this->userid) && $this->userid != "") {
         } else {
             Access::Respond (0, array(), '请先进行登录');
         }

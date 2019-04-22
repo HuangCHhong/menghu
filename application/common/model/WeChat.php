@@ -28,8 +28,8 @@ class WeChat extends Model
         $response =  Access::deljson_arr(Curl::sendget(self::$login_url,$param));
         if(isset($response['openid']) && isset($response["session_key"])){
             //暂时将用户的登录态记录到session中
-            Common::setSession(Config::get("SESSION_OPENID"),$response['openid']);
-            Common::setSession(Config::get("SESSION_KEY"),$response['session_key']);
+            Common::setSession(Config::get("SESSION_OPENID"),$response['openid'],false);
+            Common::setSession(Config::get("SESSION_KEY"),$response['session_key'],false);
 //            Common::setSession(Config::get("SESSION_UNIONID"),$response['unionid']);
 
             return $response['openid'];

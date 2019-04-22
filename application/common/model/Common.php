@@ -39,9 +39,9 @@ class Common extends Model
         //获取session_id
         $session_id = Access::MustParamDetect('session_id');
         session_id($session_id);
-        session_start();
-        return $_SESSION[$key];
-//        return \think\facade\Session::get($key);
+//        session_start();
+//        return $_SESSION[$key];
+        return \think\facade\Session::get($key);
     }
 
     public static function hasSesssion($key){

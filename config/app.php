@@ -161,5 +161,16 @@ return [
     // ElasticSearch
     'ElASTIC_HOST'=>[
         '129.204.182.233:9200'
-    ]
+    ],
+
+    //定义文件类型
+    'FILE_TYPE'=> json_encode(
+        array(
+            'icon'   =>  ['size'=>100678,'ext'=>'jpg,png,gif'],
+            'picture'   =>  ['size'=>1000000,'ext'=>'jpg,png,gif'],
+            'video'     =>  ['size'=>10000000,'ext'=>'mp4'],
+            'sound'     =>  ['size'=>1000000,'ext'=>'wav'],
+            'unknown'   =>  ['size'=>0,'ext'=>'png']
+        )
+    ),
 ];

@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\Url;
 use app\common\model\Elastic;
 use think\Controller;
 use app\common\model\Authority;
@@ -92,11 +93,15 @@ class Post extends Controller
         // 必选参数
         $mustParam = array("content","typeId");
         Access::MustParamDetectOfRawData($mustParam,$data);
+        //图片存储
+        $file = Url::uploadHandle($userId,"upload");
         // 存储到DB
         $data["userId"] = $userId;
+        $data["fileId"] = $file["fileId"];
         $postId = PostModel::in($data);
         $data = PostModel::read(array("id"=>$postId));
         Elastic::getInstance()->addDoc($data[0]["id"],"post",$data[0]);
+
 
         Access::Respond(1,array(),"帖子发布成功");
     }

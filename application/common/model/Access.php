@@ -7,6 +7,7 @@
  */
 namespace app\common\model;
 use app\common\model\Common;
+use \Config;
 class Access
 {
     /**
@@ -139,5 +140,24 @@ class Access
     public static function deljson_arr($json){
         header('Content-Type: application/json');
         return json_decode($json, 256);
+    }
+
+    /**
+     * 获取对应的拓展名规则
+     */
+    public static function getFileExtendConf ($type = "icon") {
+        $obj = json_decode(Config::get("FILE_TYPE"), true);
+
+        if (isset ($obj[$type])) {
+            // 判断是否包括
+            $tmp_arr = $obj[$type];
+            if ($tmp_arr != null) {
+                return $tmp_arr;
+            }
+            return ['size'=>0,'ext'=>'jpg'];
+        } else {
+            return ['size'=>0,'ext'=>'jpg'];
+        }
+        return ['size'=>0,'ext'=>'jpg'];
     }
 }

@@ -8,16 +8,18 @@
 namespace app\admin\controller;
 
 use app\common\model\Access;
+use think\facade\App;
 use think\Controller;
 use think\facade\Config;
 use app\common\model\Common;
 use think\facade\Session;
+use app\admin\model\Url;
 
 class Index extends Controller
 {
     public function index(){
-        Common::setSession("name","holden",false);
-        Access::Respond(0,array(),"success");
+//        echo App::getAppPath();
+        echo json_encode(Url::uploadHandle(1,"upload"));
     }
     public function index1(){
         print_r(Session::get());

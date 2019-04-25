@@ -13,7 +13,7 @@ use think\Controller;
 use app\common\model\Access;
 use app\common\model\Authority;
 use app\admin\model\infoType as infoTypeModel;
-class infoType extends Controller
+class InfoType extends Controller
 {
     // 获取消息类型
     public function get(){

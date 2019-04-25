@@ -54,7 +54,7 @@ class WeChat extends Model
         // 进行数据存储
         $data = array(
             'nickName'=>$rawData['nickName'],
-            'openid'=>$rawData['roleId'],
+            'openId'=>$rawData['roleId'],
             'city'=>$rawData['city'],
             'avatarUrl'=>$rawData['avatarUrl'],
             'roleId'=>$rawData['roleId'],

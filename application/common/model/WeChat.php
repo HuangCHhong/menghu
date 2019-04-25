@@ -46,10 +46,10 @@ class WeChat extends Model
         }
 
         // 验证数据是否遭到串改
-        $signature2 = sha1($rawData,$session_key);
-        if($signature != $signature2){
-            Access::Respond(0,array(),'数据验证失败，可能遭到串改');
-        }
+//        $signature2 = sha1($rawData,$session_key);
+//        if($signature != $signature2){
+//            Access::Respond(0,array(),'数据验证失败，可能遭到串改');
+//        }
 
         // 进行数据存储
         $data = array(

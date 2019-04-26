@@ -115,7 +115,7 @@ class Post extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ORDINARY"),Config::get("ADMIN")))->check(null)->loadAccount($flag,$userId);
         //图片存储
         $file = Url::uploadHandle($userId,"upload");
         Access::Respond(1,$file,"图片存储成功");

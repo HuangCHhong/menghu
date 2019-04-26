@@ -99,7 +99,7 @@ class Post extends Controller
         // 解析json
         $data = Access::deljson_arr(file_get_contents("php://input"));
         // 必选参数
-        $mustParam = array("content","typeId","fileId");
+        $mustParam = array("content","typeId");
         Access::MustParamDetectOfRawData($mustParam,$data);
 
         // 存储到DB

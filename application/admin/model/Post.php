@@ -52,7 +52,7 @@ class Post extends Model
     }
 
     public static function read($list){
-        $sql = "select id,userId,content,praise,anonymous,typeId,create_time,update_time from post where status=0";
+        $sql = "select id,userId,content,praise,anonymous,typeId,fileId,create_time,update_time from post where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
         }else if(isset($list["idList"])){

@@ -8,6 +8,7 @@
 
 namespace app\admin\controller;
 
+use app\admin\model\File;
 use app\common\model\Authority;
 use app\common\model\Elastic;
 use think\Controller;
@@ -26,6 +27,13 @@ class Info extends Controller
         $paramList = Access::OptionalParamOfList($param);
         // 从数据库中获取相对应的值
         $data = InfoModel::read($paramList);
+        //查询评论图片
+        if(!empty($postData["fileId"])){
+            $file = File::getById($data["fileId"]);
+            $postData["filePath"] = $file["absolutePath"];
+        }else{
+            $postData["filePath"] = null;
+        }
         Access::Respond(1,$data,"获取资讯成功");
     }
 

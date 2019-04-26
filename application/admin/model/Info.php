@@ -46,7 +46,7 @@ class Info extends Model
     }
 
     public static function read($list){
-        $sql = "select id,typeId,title,content,create_time,update_time from info where status=0";
+        $sql = "select id,typeId,title,content,fileId,create_time,update_time from info where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
         }else if(isset($list["typeId"])){

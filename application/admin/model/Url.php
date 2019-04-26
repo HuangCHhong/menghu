@@ -39,7 +39,7 @@ class Url extends Model
             // 成功上传后 获取上传信息
             $extensionName = $info->getExtension();                  // 后缀名
             $relatePath = $relateDir.'/'.$info->getSaveName ();       // 全局路径
-            $absolutePath = "http://".$serverHost.'/'.$relatePath;
+            $absolutePath = "https://".$serverHost.'/'.$relatePath;
             $filesize = $info->getSize ();
 
             $ret['host'] = $serverHost;                         // 主机名

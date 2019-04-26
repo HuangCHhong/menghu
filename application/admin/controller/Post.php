@@ -34,7 +34,7 @@ class Post extends Controller
         // 权限设置
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);;
+        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);
         // 可选参数
         $param = array('id','idList','userId','typeId','firstTime','endTime');
         $paramList = Access::OptionalParamOfList($param);

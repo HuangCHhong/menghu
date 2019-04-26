@@ -55,18 +55,24 @@ class Post extends Model
         $sql = "select id,userId,content,praise,anonymous,typeId,fileId,create_time,update_time from post where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
-        }else if(isset($list["idList"])){
+        }
+        if(isset($list["idList"])){
            $str = Common::generateSQL($list["idList"]);
             $sql .= " AND id In ".$str;
-        }else if(isset($list["typeId"])){
+        }
+        if(isset($list["typeId"])){
             $sql .= " AND typeId=".$list["typeId"];
-        }else if(isset($list["userId"])){
-            $sql .= " AND userId=".$list["userId"];
-        }else if(isset($list["firstTime"])){
+        }
+        if(isset($list["userId"])) {
+            $sql .= " AND userId=" . $list["userId"];
+        }
+        if(isset($list["firstTime"])){
             $sql .= " AND create_time > ".$list["firstTime"];
-        }else if(isset($list["endTime"])){
+        }
+        if(isset($list["endTime"])){
             $sql .= " AND create_time <".$list["endTime"];
-        }else if(isset($list["content"])){
+        }
+        if(isset($list["content"])){
             $sql .= " AND content like '%".$list["content"]."%'";
         }
 

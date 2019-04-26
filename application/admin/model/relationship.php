@@ -46,10 +46,12 @@ class relationship extends Model
         if(isset($list["userIdList"])){
             $str = Common::generateSQL($list["userIdList"]);
             $sql .= " AND userId In ".$str;
-        }else if(isset($list["attUserIdList"])){
+        }
+        if(isset($list["attUserIdList"])){
             $str = Common::generateSQL($list["attUserIdList"]);
             $sql .= " AND attUserId In ".$str;
-        }else if(isset($list["id"])){
+        }
+        if(isset($list["id"])){
             $sql .= " AND id =".$list["id"];
         }
         $result = Db::query($sql);

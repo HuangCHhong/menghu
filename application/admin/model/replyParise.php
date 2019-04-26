@@ -44,9 +44,11 @@ class replyParise extends Model
         $sql = "select id,userId,replyId,create_time,update_time from reply_parise where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
-        }else if(isset($list["userId"])){
+        }
+        if(isset($list["userId"])){
             $sql .= " AND userId=".$list["userId"];
-        }else if(isset($list["replyId"])){
+        }
+        if(isset($list["replyId"])){
             $sql .= " AND replyId=".$list["replyId"];
         }
         $result = Db::query($sql);

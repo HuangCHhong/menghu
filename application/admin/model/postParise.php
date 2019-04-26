@@ -44,9 +44,11 @@ class postParise extends Model
         $sql = "select id,userId,postId,create_time,update_time from post_parise where status=0";
         if(isset($list["id"])){
             $sql .= " AND id=".$list["id"];
-        }else if(isset($list["userId"])){
+        }
+        if(isset($list["userId"])){
             $sql .= " AND userId=".$list["userId"];
-        }else if(isset($list["postId"])){
+        }
+        if(isset($list["postId"])){
             $sql .= " AND postId=".$list["postId"];
         }
         $result = Db::query($sql);

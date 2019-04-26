@@ -18,6 +18,7 @@ use app\common\model\Access;
 use app\admin\model\Post as PostModel;
 use app\admin\model\User;
 use app\admin\model\reply;
+use app\admin\model\postParise;
 use \Config;
 
 class Post extends Controller
@@ -31,7 +32,9 @@ class Post extends Controller
             "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1973317496,452181970&fm=26&gp=0.jpg",
             ];
         // 权限设置
-        Authority::getInstance()->permitAll(true)->check(null);
+        $userId = null;
+        $flag = null;
+        Authority::getInstance()->permitAll(true)->check(null)->loadAccount($flag,$userId);;
         // 可选参数
         $param = array('id','idList','userId','typeId','firstTime','endTime');
         $paramList = Access::OptionalParamOfList($param);
@@ -55,6 +58,13 @@ class Post extends Controller
                 $postData["filePath"] = $file["absolutePath"];
             }else{
                 $postData["filePath"] = null;
+            }
+            //判断是否点过赞
+            $postParise = postParise::read(array("postId"=>$postData["id"],"userId"=>$userId));
+            if(is_array($postParise) && count($postParise)>0){
+                $postData["isParise"] = 1;
+            }else{
+                $postData["isParise"] = 0;
             }
         }
         Access::Respond(1,$data,"获取帖子列表成功");

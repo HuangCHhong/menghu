@@ -33,7 +33,7 @@ class Replyparise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
         // 参数验证
         // 解析json
         $param = Access::deljson_arr(file_get_contents("php://input"));
@@ -63,7 +63,7 @@ class Replyparise extends Controller
         // 权限验证
         $userId = null;
         $flag = null;
-        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check(null)->loadAccount($flag,$userId);
 
         // 参数验证
         // 解析json

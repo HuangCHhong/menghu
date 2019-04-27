@@ -42,7 +42,7 @@ class Post extends Controller
         $data = PostModel::read($paramList);
         foreach ($data as &$postData){
             //查询用户信息
-            if($postData["anonymous"]){
+            if(!$postData["anonymous"]){
                 $user = User::getByUserId($postData["userId"]);
                 $postData["nickName"] = $user["nickName"];
                 $postData["avatarUrl"] = $user["avatarUrl"];
@@ -139,7 +139,7 @@ class Post extends Controller
         Access::MustParamDetectOfRawData($mustParam,$data);
         // 权限校准
         $data = PostModel::getById($data["id"]);
-        Authority::getInstance()->permit(array(Config::get("ORDINARY")))->check($data["userId"]);
+        Authority::getInstance()->permit(array(Config::get("ADMIN"),Config::get("ORDINARY")))->check($data["userId"]);
         // 更新帖子
         PostModel::upd($data["id"],$data);
     }

@@ -114,7 +114,11 @@ class Reply extends Controller
         Elastic::getInstance()->addDoc($reply["id"],"reply",$reply);
         // 评论成功后发送给发帖人
         $post = PostModel::getById($data["postId"]);
-        Gateway::sendToUid($post["userId"],"收到一条评论，可立即查看");
+        $message = array(
+            'content'=>"收到一条评论，可立即查看。帖子内容:".$data["content"],
+            'postId'=>$data["postId"],
+            );
+        Gateway::sendToUid($post["userId"],Access::json_arr($message));
         Access::Respond(1,array(),"评论成功");
     }
 }

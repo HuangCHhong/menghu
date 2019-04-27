@@ -109,14 +109,20 @@ class Reply extends Controller
         // 存储到DB
         $data["userId"] = $userId;
         $id = replyModel::in($data);
+        // 获取user信息
+        $userInfo = \app\admin\model\User::getByUserId($userId);
         // 存储到ES
         $reply = replyModel::getById($id);
         Elastic::getInstance()->addDoc($reply["id"],"reply",$reply);
         // 评论成功后发送给发帖人
         $post = PostModel::getById($data["postId"]);
         $message = array(
-            'content'=>"收到一条评论，可立即查看。帖子内容:".$data["content"],
+            'content'=>$data["content"],
             'postId'=>$data["postId"],
+            'nickName'=>$userInfo["nickName"],
+            'avatarUrl'=> $userInfo["avatarUrl"],
+            'create_time'=>time(),
+            'type'=>'reply'
             );
         Gateway::sendToUid($post["userId"],Access::json_arr($message));
         Access::Respond(1,array(),"评论成功");

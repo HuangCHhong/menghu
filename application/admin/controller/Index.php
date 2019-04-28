@@ -7,6 +7,7 @@
  */
 namespace app\admin\controller;
 
+use app\admin\model\File;
 use app\admin\model\Qiniu;
 use app\common\model\Access;
 use think\facade\App;
@@ -22,10 +23,7 @@ class Index extends Controller
     public function index(){
 //        echo App::getAppPath();
 //       print_r(Qiniu::getInstance()->upload("https://www.coolholden.cn/static/uploads/39/20190427/3c6aafd6ac064eb4519269bdbe3cdc60.png"));
-        $filePath = "https://www.coolholden.cn/static/uploads/39/20190427/3c6aafd6ac064eb4519269bdbe3cdc60.png";
-        $file = fopen($filePath, 'rb');
-        $stat = fstat($file);
-        print_r($stat);
+        print_r(File::updateFilePath([['id'=>1,"isBackup"=>0],['id'=>2,"isBackup"=>0]]));
     }
 
     public function index1(){

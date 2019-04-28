@@ -6,7 +6,7 @@
  * Time: 10:31
  */
 
-namespace app\admin\model;
+namespace app\common\model;
 
 use Qiniu\Storage\UploadManager;
 use Qiniu\Auth;

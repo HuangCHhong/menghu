@@ -10,6 +10,7 @@ return array(
     'app\\' => array($baseDir . '/application'),
     'Workerman\\' => array($vendorDir . '/workerman/workerman'),
     'React\\Promise\\' => array($vendorDir . '/react/promise/src'),
+    'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'GuzzleHttp\\Stream\\' => array($vendorDir . '/guzzlehttp/streams/src'),
     'GuzzleHttp\\Ring\\' => array($vendorDir . '/guzzlehttp/ringphp/src'),

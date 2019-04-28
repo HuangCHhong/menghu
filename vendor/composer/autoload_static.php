@@ -8,6 +8,7 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
 {
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
+        '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -26,6 +27,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         'R' => 
         array (
             'React\\Promise\\' => 14,
+        ),
+        'Q' => 
+        array (
+            'Qiniu\\' => 6,
         ),
         'P' => 
         array (
@@ -60,6 +65,10 @@ class ComposerStaticInit0ae4b67a2ffa32f9e6c5ff01a710aec5
         'React\\Promise\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/promise/src',
+        ),
+        'Qiniu\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu',
         ),
         'Psr\\Log\\' => 
         array (

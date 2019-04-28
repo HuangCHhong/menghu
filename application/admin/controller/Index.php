@@ -24,7 +24,6 @@ class Index extends Controller
 //       print_r(Qiniu::getInstance()->upload("https://www.coolholden.cn/static/uploads/39/20190427/3c6aafd6ac064eb4519269bdbe3cdc60.png"));
         $filePath = "https://www.coolholden.cn/static/uploads/39/20190427/3c6aafd6ac064eb4519269bdbe3cdc60.png";
         $file = fopen($filePath, 'rb');
-        var_dump($file);
         $stat = fstat($file);
         print_r($stat);
     }

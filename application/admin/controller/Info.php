@@ -30,7 +30,7 @@ class Info extends Controller
         //查询评论图片
         foreach ($data as &$infoData) {
             if (!empty($infoData["fileId"])) {
-                $file = File::getById($data["fileId"]);
+                $file = File::getById($infoData["fileId"]);
                 if ($file["isBackup"]) {
                     //有备份则使用备份后的地址
                     $infoData["filePath"] = $file["backupAddr"];

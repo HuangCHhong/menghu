@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 
 
+use app\common\model\Access;
 use think\Controller;
 use app\admin\model\File;
 use app\common\model\Qiniu;
@@ -32,5 +33,6 @@ class Crontab extends Controller
         }
         //批量更新数据库
         File::updateFilePath($successData);
+        Access::Respond(1,array(),"备份成功");
     }
 }

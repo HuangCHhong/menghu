@@ -28,11 +28,18 @@ class Info extends Controller
         // 从数据库中获取相对应的值
         $data = InfoModel::read($paramList);
         //查询评论图片
-        if(!empty($postData["fileId"])){
-            $file = File::getById($data["fileId"]);
-            $postData["filePath"] = $file["absolutePath"];
-        }else{
-            $postData["filePath"] = null;
+        foreach ($data as &$infoData) {
+            if (!empty($infoData["fileId"])) {
+                $file = File::getById($data["fileId"]);
+                if ($file["isBackup"]) {
+                    //有备份则使用备份后的地址
+                    $infoData["filePath"] = $file["backupAddr"];
+                } else {
+                    $infoData["filePath"] = $file["absolutePath"];
+                }
+            } else {
+                $infoData["filePath"] = null;
+            }
         }
         Access::Respond(1,$data,"获取资讯成功");
     }

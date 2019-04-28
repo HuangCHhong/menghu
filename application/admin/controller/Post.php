@@ -55,7 +55,12 @@ class Post extends Controller
             //查询评论图片
             if(!empty($postData["fileId"])){
                 $file = File::getById($postData["fileId"]);
-                $postData["filePath"] = $file["absolutePath"];
+                if($file["isBackup"]){
+                    //有备份则使用备份后的地址
+                    $postData["filePath"] = $file["backupAddr"];
+                }else{
+                    $postData["filePath"] = $file["absolutePath"];
+                }
             }else{
                 $postData["filePath"] = null;
             }

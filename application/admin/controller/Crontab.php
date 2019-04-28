@@ -20,7 +20,7 @@ class Crontab extends Controller
         $prefix = "/menghu/";
         $qiniu_prefix = "http://pqngqil0k.bkt.clouddn.com/";
         $fileInfos = File::getFile();
-        $successData = array();
+        $successData = array(array());
         //备份
         foreach ($fileInfos as $fileInfo){
             $file = $prefix.$fileInfo["relatePath"];

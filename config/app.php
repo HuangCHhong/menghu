@@ -173,4 +173,9 @@ return [
             'unknown'   =>  ['size'=>0,'ext'=>'png']
         )
     ),
+
+    //七牛相关配置
+    'Qiniu_AccessKey'=>'aINGX8IbYN4IyjHvmfNz4vb3Q9lDyUdv_2Bzj9vW',
+    'Qiniu_SecretKey'=>'73o6aq4z6D9gKKI3bOdPIWXZFB-OE02LsUhbaMrY',
+    'Qiniu_BucketName'=>'menghu',
 ];

@@ -25,11 +25,11 @@ class Crontab extends Controller
         foreach ($fileInfos as $fileInfo){
             $file = $prefix.$fileInfo["relatePath"];
             $ret = Qiniu::getInstance()->upload($file);
-            $successData = array_push($successData,array(
+            $successData[] = array(
                 "id"=>$fileInfo["id"],
                 'backupAddr'=>$qiniu_prefix.$ret["key"],
                 'isBackup'=>1
-            ));
+            );
         }
         //批量更新数据库
         File::updateFilePath($successData);

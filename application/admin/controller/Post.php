@@ -10,6 +10,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\File;
+use app\admin\model\PostFile;
 use app\admin\model\Url;
 use app\common\model\Elastic;
 use think\Controller;
@@ -53,16 +54,16 @@ class Post extends Controller
             //获取评论总数
             $postData["replyCount"] = count(reply::read(array("postId"=>$postData["id"])));
             //查询评论图片
-            if(!empty($postData["fileId"])){
-                $file = File::getById($postData["fileId"]);
+            $postData["filePath"] = null;
+            $postFiles = PostFile::getBypostId($postData["id"]);
+            foreach ($postFiles as $postFile){
+                $file = File::getById($postFile["fileId"]);
                 if($file["isBackup"]){
                     //有备份则使用备份后的地址
                     $postData["filePath"] = $file["backupAddr"];
                 }else{
                     $postData["filePath"] = $file["absolutePath"];
                 }
-            }else{
-                $postData["filePath"] = null;
             }
             //判断是否点过赞
             $postParise = postParise::read(array("postId"=>$postData["id"],"userId"=>$userId));
@@ -120,6 +121,14 @@ class Post extends Controller
         // 存储到DB
         $data["userId"] = $userId;
         $postId = PostModel::in($data);
+        // 判断是否有发送图片过来
+        if(isset($data["fileIds"])){
+            $insertData = array();
+            foreach ($data["fileIds"] as $fileId){
+                $insertData[] = ["postId"=>$postId,"fileId"=>$fileId];
+            }
+            PostFile::in($insertData);
+        }
         $data = PostModel::read(array("id"=>$postId));
         Elastic::getInstance()->addDoc($data[0]["id"],"post",$data[0]);
 
@@ -132,8 +141,12 @@ class Post extends Controller
         $flag = null;
         Authority::getInstance()->permit(array(Config::get("ORDINARY"),Config::get("ADMIN")))->check(null)->loadAccount($flag,$userId);
         //图片存储
-        $file = Url::uploadHandle($userId,"upload");
-        Access::Respond(1,$file,"图片存储成功");
+        $fileIds = array();
+        foreach ($_FILES as $filename=>$value){
+            $file = Url::uploadHandle($userId,$filename);
+            $fileIds[] = $file["fileId"];
+        }
+        Access::Respond(1,$fileIds,"图片存储成功");
     }
 
     public function updPost(){

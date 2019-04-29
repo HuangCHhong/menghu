@@ -22,12 +22,7 @@ class Index extends Controller
 {
 
     public function index(){
-        $redis = new \Redis();
-        $result = $redis->connect(Config::get("LINUX_HOST"), 6379, 2.5);
-        $result = $redis->auth('12346578');
-        $result = $redis->set('cs','134984848949');
-        $result = $redis->get('cs');
-        echo $result;
+        print_r($_FILES);
     }
 
     public function index1(){

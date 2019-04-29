@@ -62,6 +62,8 @@ class Postparise extends Controller
         );
 
         $post = postModel::getById($param["postId"]);
+        \app\admin\model\User::addParise($post["userId"]);
+
         Gateway::sendToUid($post["userId"],Access::json_arr($message));
 
         Access::Respond(1,array(),"点赞成功");
@@ -88,6 +90,10 @@ class Postparise extends Controller
         // 保存DB
         postPariseModel::del(array($data[0]["id"]));
         postModel::delParise($param["postId"]);
+
+        $post = postModel::getById($param["postId"]);
+        \app\admin\model\User::delParise($post["userId"]);
+
         Access::Respond(1,array(),"取消点赞成功");
     }
 }

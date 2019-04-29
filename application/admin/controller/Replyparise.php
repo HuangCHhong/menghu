@@ -62,6 +62,8 @@ class Replyparise extends Controller
             'create_time'=>time(),
             'type'=>'reply_parise'
         );
+
+        \app\admin\model\User::addParise($reply["userId"]);
         Gateway::sendToUid($reply["userId"],Access::json_arr($message));
 
         Access::Respond(1,array(),"点赞成功");
@@ -90,6 +92,10 @@ class Replyparise extends Controller
         // 保存DB
         replyPariseModel::del(array($data[0]["id"]));
         replyModel::delParise($param["replyId"]);
+
+        $reply = replyModel::getById($param["replyId"]);
+        \app\admin\model\User::delParise($reply["userId"]);
+
         Access::Respond(1,array(),"取消点赞成功");
     }
 }

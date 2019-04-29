@@ -62,4 +62,17 @@ class User extends Model
         }
         return Db::query($sql);
     }
+
+    // 点赞数递增
+    public static function addParise($userId){
+        $data = self::getByUserId($userId);
+        $data["praiseCount"]++;
+        return self::upd($data["id"],$data);
+    }
+    // 点赞数递减
+    public static function delParise($userId){
+        $data = self::getByUserId($userId);
+        $data["praiseCount"]--;
+        return self::upd($data["id"],$data);
+    }
 }

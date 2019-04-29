@@ -23,7 +23,8 @@ class Index extends Controller
 
     public function index(){
 //       RedisCache::getInstance()->set("name","holden");
-       echo RedisCache::getInstance()->get("name");
+        RedisCache::getInstance()->hSet(39,time(),"helloworld");
+
     }
 
     public function index1(){

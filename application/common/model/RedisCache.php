@@ -30,45 +30,17 @@ class RedisCache
     }
 
     /**
-     * 返回redis常量的定义
-     */
-    public static function GetRedisKeys ($module, $index) {
-        if (!defined("REDIS_TYPE") || !defined("REDIS_APP")) {
-            // 必要常量需要定义
-            Access::Respond (0, array(), 'redis常量未定义, 自动退出');
-        }
-        $obj = json_decode(REDIS_TYPE, true);
-        if (isset ($obj[$module]) && isset($obj[$module][$index])) {
-            // 如果已经定义键值
-            $key = sprintf ("%s:%s:%s:%s", REDIS_APP, "shenzhen", $module, $obj[$module][$index]);
-            return $key;
-        } else {
-            Access::Respond (0, array(), 'redis键值无法获取, 自动退出');
-        }
-    }
-
-    /**
      * 设置字符串类型
      */
     public function set ($key, $name, $expire=NULL) {
-        if ($expire == NULL) {
-            $expire = $this->redis->options['expire'];
-        }
-        $this->handler->setex($key, $expire, $name);
+        $this->redis->set($key, $name);
     }
 
     /**
      * 获取字符串
      */
     public function get ($key, $default=true) {
-        return $this->handler->get ($key);
-    }
-
-    /**
-     * 删除字符串类型
-     */
-    public function rm($key){
-        $this->handler->rm($key);
+        return $this->redis->get ($key);
     }
 
     /*同时将多个 field-value (域-值)对设置到哈希表 key 中。
@@ -92,16 +64,6 @@ class RedisCache
         return $this->redis->hSet($key, $hashKey, $value);
     }
 
-    public function expire($key, $second=NULL) {
-        if ($second == NULL) {
-            $second = $this->redis->options['expire'];
-        }
-        $this->handler->expire ($key, $second);
-    }
-
-    public function sort ($key, $array) {
-        return $this->handler->sort($key, $array);
-    }
 
     /**
      * 删除哈希表中的某一个字段
@@ -162,10 +124,6 @@ class RedisCache
     {
         $result = $this->redis->hLen($key);
         return $result;
-    }
-
-    public function lPush($key, $value) {
-        $this->handler->lpush ($key, $value);
     }
 
     public function rPush ($key, $value) {

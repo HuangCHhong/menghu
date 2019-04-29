@@ -120,7 +120,13 @@ class Post extends Controller
 
         // 存储到DB
         $data["userId"] = $userId;
-        $postId = PostModel::in($data);
+        $postInfo = array();
+        foreach ($data as $key=>$info){
+            if($key != "fileIds"){
+                $postInfo[$key] = $info;
+            }
+        }
+        $postId = PostModel::in($postInfo);
         // 判断是否有发送图片过来
         if(isset($data["fileIds"])){
             $insertData = array();

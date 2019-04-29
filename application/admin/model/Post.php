@@ -26,11 +26,7 @@ class Post extends Model
     }
 
     public static function in($list){
-        try{
             return Db::table("post")->insertGetId($list);
-        }catch (\Exception $e){
-            Access::Respond(0,array(),"添加帖子失败");
-        }
     }
 
     public static function del($postIdList){

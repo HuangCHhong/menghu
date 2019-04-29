@@ -54,15 +54,15 @@ class Post extends Controller
             //获取评论总数
             $postData["replyCount"] = count(reply::read(array("postId"=>$postData["id"])));
             //查询评论图片
-            $postData["filePath"] = null;
+            $postData["filePath"] = array();
             $postFiles = PostFile::getBypostId($postData["id"]);
             foreach ($postFiles as $postFile){
                 $file = File::getById($postFile["fileId"]);
                 if($file["isBackup"]){
                     //有备份则使用备份后的地址
-                    $postData["filePath"] = $file["backupAddr"];
+                    $postData["filePath"][] = $file["backupAddr"];
                 }else{
-                    $postData["filePath"] = $file["absolutePath"];
+                    $postData["filePath"][] = $file["absolutePath"];
                 }
             }
             //判断是否点过赞

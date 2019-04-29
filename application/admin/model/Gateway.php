@@ -27,7 +27,7 @@ class Gateway
        if(GatewaySrc::isUidOnline($uid)){
            // 向任意uid的网站页面发送数据
            GatewaySrc::sendToUid($uid, $message);
-           RedisCache::getInstance()->hSet($uid,time(),$message);
+//           RedisCache::getInstance()->hSet($uid,time(),$message);
        }else{
            //使用hash结构存储到对应的redis中
             RedisCache::getInstance()->hSet($uid,time(),$message);

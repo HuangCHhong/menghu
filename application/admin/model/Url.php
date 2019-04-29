@@ -33,7 +33,8 @@ class Url extends Model
             Access::Respond (false, array(), "上传出错不是form方式提交的文件");
         }
         // 移动到框架应用根目录/public/uploads/ 目录下
-        $info = $file->validate(Access::getFileExtendConf ($filetype))->move($absolutedir);
+//        $info = $file->validate(Access::getFileExtendConf ($filetype))->move($absolutedir);
+        $info = $file->move($absolutedir);
 
         if($info){
             // 成功上传后 获取上传信息

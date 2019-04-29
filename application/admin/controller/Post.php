@@ -131,7 +131,9 @@ class Post extends Controller
         if(isset($data["fileIds"])){
             $insertData = array();
             foreach ($data["fileIds"] as $fileId){
-                $insertData[] = ["postId"=>$postId,"fileId"=>$fileId];
+                if(!empty($fileId)){
+                    $insertData[] = ["postId"=>$postId,"fileId"=>$fileId];
+                }
             }
             PostFile::in($insertData);
         }

@@ -12,6 +12,7 @@ namespace app\admin\controller;
 use app\common\model\Access;
 use app\common\model\Authority;
 use app\admin\model\Gateway;
+use app\common\model\RedisCache;
 use \Config;
 
 class Contact
@@ -28,6 +29,11 @@ class Contact
 
         //client_id与uid绑定
         Gateway::bind($userId,$client_id);
+        //判断是否有消息需要推送
+        $result = RedisCache::getInstance()->hGetall($userId);
+        foreach ($result as $info){
+            Gateway::sendToUid($userId,$info);
+        }
         Access::Respond(1,array(),"clientId与userId绑定成功");
     }
 }

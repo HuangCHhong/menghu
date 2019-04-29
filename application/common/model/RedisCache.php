@@ -8,31 +8,21 @@
  * 参考网址: https://www.cnblogs.com/wenxinphp/p/6016449.html
  */
 namespace app\common\model;
-use think\cache\driver\Redis;
 use think\facade\Config;
-class RedisCache extends Redis
+class RedisCache
 {
     private static $instance = null;
-    public $redis = null;
+    private $redis = null;
 
     public function __construct($options = [])
     {
-        parent::__construct([
-            'host'       => Config::get("LINUX_HOST"),
-            'port'       => 6379,
-            'password'   => '',
-            'select'     => 0,
-            'timeout'    => 0,
-            'expire'     => 3600,
-            'persistent' => false,
-            'prefix'     => '',
-        ]);
+        $this->redis = new \Redis();
+        $this->redis->connect(Config::get("LINUX_HOST"), 6379, 2.5);
     }
 
     public static function getInstance () {
         if (self::$instance == null) {
             self::$instance = new RedisCache ();
-            self::$instance->redis = self::$instance->handler;
             return self::$instance;
         } else {
             return self::$instance;
@@ -88,7 +78,7 @@ class RedisCache extends Redis
      * */
     public function hMset($key, $hashKeys)
     {
-        return $this->handler->hMset($key, $hashKeys);
+        return $this->redis->hMset($key,$hashKeys);
     }
 
     /*将哈希表 key 中的字段 field 的值设为 value 。
@@ -99,7 +89,7 @@ class RedisCache extends Redis
          * */
     public function hSet($key, $hashKey, $value)
     {
-        return $this->handler->hSet($key, $hashKey, $value);
+        return $this->redis->hSet($key, $hashKey, $value);
     }
 
     public function expire($key, $second=NULL) {
@@ -118,7 +108,7 @@ class RedisCache extends Redis
      */
     public function hDel($key, $hashKey1)
     {
-        $result = $this->handler->hDel($key, $hashKey1);
+        $result = $this->redis->hDel($key, $hashKey1);
         return $result;
     }
 
@@ -126,7 +116,7 @@ class RedisCache extends Redis
      * 删除整个hash key
      */
     public function del ($key) {
-        return $this->handler->del ($key);
+        return $this->redis->del ($key);
     }
 
     /**
@@ -134,7 +124,7 @@ class RedisCache extends Redis
      */
     public function hExists($key, $hashKey)
     {
-        $result = $this->handler->hExists($key, $hashKey);
+        $result = $this->redis->hExists($key, $hashKey);
         return $result;
     }
 
@@ -143,7 +133,7 @@ class RedisCache extends Redis
      */
     public function hGet($key, $hashKey)
     {
-        $result = $this->handler->hGet($key, $hashKey);
+        $result = $this->redis->hGet($key, $hashKey);
         return $result;
     }
 
@@ -152,7 +142,7 @@ class RedisCache extends Redis
      */
     public function hGetall($key)
     {
-        $result = $this->handler->hGetAll($key);
+        $result = $this->redis->hGetAll($key);
         return $result;
     }
 
@@ -161,7 +151,7 @@ class RedisCache extends Redis
      */
     public function hKeys($key)
     {
-        $result = $this->handler->hKeys($key);
+        $result = $this->redis->hKeys($key);
         return $result;
     }
 
@@ -170,7 +160,7 @@ class RedisCache extends Redis
      */
     public function hLen($key)
     {
-        $result = $this->handler->hLen($key);
+        $result = $this->redis->hLen($key);
         return $result;
     }
 

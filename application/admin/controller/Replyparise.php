@@ -53,7 +53,16 @@ class Replyparise extends Controller
 
         //点赞成功推送给评论者
         $reply = replyModel::getById($param["replyId"]);
-        Gateway::sendToUid($reply["userId"],"有用户对你的评论点了个赞，快点查看吧！");
+        $userInfo = \app\admin\model\User::getByUserId($userId);
+        $message = array(
+            'content'=>"有用户对你的评论点了个赞，快点查看吧！",
+            'replyId'=>$param["replyId"],
+            'nickName'=>$userInfo["nickName"],
+            'avatarUrl'=> $userInfo["avatarUrl"],
+            'create_time'=>time(),
+            'type'=>'reply_parise'
+        );
+        Gateway::sendToUid($reply["userId"],Access::json_arr($message));
 
         Access::Respond(1,array(),"点赞成功");
     }

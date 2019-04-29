@@ -43,7 +43,16 @@ class Relationship extends Controller
         }
 
         // 关注成功推送给被关注者
-        Gateway::sendToUid($param["userId"],"有用户关注了你，快点查看吧");
+        $userInfo = \app\admin\model\User::getByUserId($userId);
+        $message = array(
+            'content'=>"有用户关注了你，快点查看吧",
+            'userId'=>$userId,
+            'nickName'=>$userInfo["nickName"],
+            'avatarUrl'=> $userInfo["avatarUrl"],
+            'create_time'=>time(),
+            'type'=>'relation'
+        );
+        Gateway::sendToUid($param["userId"],Access::json_arr($message));
 
         Access::Respond(1,array(),"关注成功");
     }

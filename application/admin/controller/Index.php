@@ -10,6 +10,7 @@ namespace app\admin\controller;
 use app\admin\model\File;
 use app\admin\model\Qiniu;
 use app\common\model\Access;
+use app\common\model\RedisCache;
 use think\facade\App;
 use think\Controller;
 use think\facade\Config;
@@ -21,9 +22,12 @@ class Index extends Controller
 {
 
     public function index(){
-//        echo App::getAppPath();
-//       print_r(Qiniu::getInstance()->upload("https://www.coolholden.cn/static/uploads/39/20190427/3c6aafd6ac064eb4519269bdbe3cdc60.png"));
-        print_r(File::updateFilePath([['id'=>1,"isBackup"=>0],['id'=>2,"isBackup"=>0]]));
+        $redis = new \Redis();
+        $result = $redis->connect(Config::get("LINUX_HOST"), 6379, 2.5);
+        $result = $redis->auth('12346578');
+        $result = $redis->set('cs','134984848949');
+        $result = $redis->get('cs');
+        echo $result;
     }
 
     public function index1(){

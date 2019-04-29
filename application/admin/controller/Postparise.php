@@ -51,8 +51,18 @@ class Postparise extends Controller
         postModel::addParise($param["postId"]);
 
         //点赞成功推送给评论者
+        $userInfo = \app\admin\model\User::getByUserId($userId);
+        $message = array(
+            'content'=>"有用户对你的帖子点了个赞，快点查看吧！",
+            'postId'=>$param["postId"],
+            'nickName'=>$userInfo["nickName"],
+            'avatarUrl'=> $userInfo["avatarUrl"],
+            'create_time'=>time(),
+            'type'=>'post_parise'
+        );
+
         $post = postModel::getById($param["postId"]);
-        Gateway::sendToUid($post["userId"],"有用户对你的帖子点了个赞，快点查看吧！");
+        Gateway::sendToUid($post["userId"],Access::json_arr($message));
 
         Access::Respond(1,array(),"点赞成功");
     }

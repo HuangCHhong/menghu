@@ -36,6 +36,6 @@ class Contact
         }
         //推送完将redis删除
         RedisCache::getInstance()->del($userId);
-        Access::Respond(1,array(),"clientId与userId绑定成功");
+        Access::Respond(1,array("is_pre"=>1),"clientId与userId绑定成功");
     }
 }

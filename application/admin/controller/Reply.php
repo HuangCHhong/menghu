@@ -18,6 +18,7 @@ use app\admin\model\reply as replyModel;
 use app\admin\model\User as UserModel;
 use app\admin\model\Post as PostModel;
 use app\admin\model\weight as weightModel;
+use app\admin\model\relationship;
 use \Config;
 
 class Reply extends Controller
@@ -51,8 +52,14 @@ class Reply extends Controller
             if(!empty($weight)){
                 $weightNum = $weight["weight"];
             }
+            // 判断发帖人是否关注了评论者
+            $relationship = relationship::getByUserId($post["userId"],$replyInfo["userId"]);
+            $base = 1;
+            if(is_array($relationship) && count($relationship)>0){
+                $base = 2;
+            }
             // 权威值计算公式：weight*praiseCount
-            $replyInfo["score"] = $weightNum * $user["praiseCount"];
+            $replyInfo["score"] = $weightNum * $user["praiseCount"] * $base;
             //获取用户信息
             if(!$replyInfo["anonymous"]){
                 $replyInfo["nickName"] = $user["nickName"];

@@ -57,4 +57,8 @@ class relationship extends Model
         $result = Db::query($sql);
         return $result;
     }
+
+    public static function getByUserId($userId,$attUserId){
+        return Db::table("relationship")->where("userId",$userId)->where("attUserId",$attUserId)->find();
+    }
 }

@@ -23,8 +23,13 @@ class Index extends Controller
 
     public function index(){
 //       RedisCache::getInstance()->set("name","holden");
-        RedisCache::getInstance()->hSet(39,time(),"helloworld");
-
+//        RedisCache::getInstance()->hSet(39,time(),"helloworld");
+        $data = \app\admin\model\relationship::getByUserId(3,1);
+        if(is_array($data) && count($data)>0){
+            print_r($data);
+        }else{
+            echo 0;
+        }
     }
 
     public function index1(){

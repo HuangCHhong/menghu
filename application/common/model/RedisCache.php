@@ -17,7 +17,8 @@ class RedisCache
     public function __construct($options = [])
     {
         $this->redis = new \Redis();
-        $this->redis->connect(Config::get("LINUX_HOST"), 6379, 2.5);
+//        $this->redis->connect(Config::get("LINUX_HOST"), 6379, 2.5);
+        $this->redis->connect("127.0.0.1", 6379, 2.5);
     }
 
     public static function getInstance () {
